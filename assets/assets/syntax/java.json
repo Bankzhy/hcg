@@ -1,0 +1,39 @@
+{
+  "language": "java",
+  "methodPattern": "(?:(?:public|protected|private|static|final|synchronized|abstract|native)\\s+)*(?:<[^>]+>\\s+)?[A-Za-z_$][A-Za-z0-9_$<>\\[\\], ?]*\\s+([A-Za-z_$][A-Za-z0-9_$]*)\\s*\\([^;]*\\)\\s*(?:throws\\s+[^\\{]+)?\\s*\\{",
+  "nodeRules": [
+    {
+      "type": "condition",
+      "pattern": "^\\s*(?:else\\s+)?if\\s*\\((.*)\\)\\s*\\{?",
+      "labelGroup": 1
+    },
+    {
+      "type": "loop",
+      "pattern": "^\\s*(for|while)\\s*\\((.*)\\)\\s*\\{?",
+      "labelGroup": 2
+    },
+    {
+      "type": "return",
+      "pattern": "^\\s*return(?:\\s+(.*?))?;?\\s*$",
+      "labelGroup": 1
+    },
+    {
+      "type": "throw",
+      "pattern": "^\\s*throw\\s+(.+?);?\\s*$",
+      "labelGroup": 1
+    },
+    {
+      "type": "break",
+      "pattern": "^\\s*break(?:\\s+[A-Za-z_$][A-Za-z0-9_$]*)?\\s*;\\s*$"
+    },
+    {
+      "type": "continue",
+      "pattern": "^\\s*continue(?:\\s+[A-Za-z_$][A-Za-z0-9_$]*)?\\s*;\\s*$"
+    },
+    {
+      "type": "statement",
+      "pattern": "^\\s*(.+;)\\s*$",
+      "labelGroup": 1
+    }
+  ]
+}

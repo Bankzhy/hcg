@@ -1,0 +1,10 @@
+{
+  "language": "python",
+  "methodPattern": "^\\s*(?:async\\s+)?def\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*\\([^)]*\\)\\s*(?:->\\s*[^:]+)?\\s*:",
+  "nodeRules": [
+    {"type": "condition", "pattern": "^\\s*(?:if|elif)\\s+(.+)\\s*:\\s*$", "labelGroup": 1},
+    {"type": "loop", "pattern": "^\\s*(?:for|while)\\s+(.+)\\s*:\\s*$", "labelGroup": 1},
+    {"type": "return", "pattern": "^\\s*return(?:\\s+(.+))?\\s*$", "labelGroup": 1},
+    {"type": "statement", "pattern": "^\\s*(.+)\\s*$", "labelGroup": 1}
+  ]
+}
