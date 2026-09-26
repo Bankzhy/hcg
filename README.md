@@ -52,6 +52,13 @@ HCG 支持安装为 Web App。安装后可以像普通桌面应用一样，从�
 - 推荐：最新版 Chrome、Edge
 - Firefox、Safari：基本页面可以使用，但安装 Web App 和本地模型访问能力可能受到浏览器限制
 
+## 评价数据集
+
+用于开发者评价的代码文件位于 [`evaluation_dataset`](evaluation_dataset/)。
+该目录包含 `developer_01` 至 `developer_10` 十个文件夹，每位评价者使用分配给自己的文件夹，并在 HCG 的 **Files → Import Folder** 中一次性导入。
+
+每个文件夹包含 60 个样本：Java、Python、JavaScript 各 20 个。请勿查看或使用其他评价者的文件夹。
+
 ## English quick start
 
 Open **https://bankzhy.github.io/hcg/** in the latest Chrome or Edge. No Flutter, Node.js, or Python installation is required. To install it as a desktop-like app, use the install icon in the browser address bar. AI features require a reachable Ollama or OpenAI-compatible API service.
