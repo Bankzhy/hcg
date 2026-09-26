@@ -1,57 +1,77 @@
 # HCG Web
 
-HCG（Hybrid Code Graph）是一个运行在浏览器中的代码图分析工具。它可以针对代码生成并展示 CFG、AST 和 PDG，并提供代码修复、代码图问答及 AI 辅助调整图等功能。
+HCG（Hybrid Code Graph）是一个本地优先的代码图分析客户端，可生成和展示 CFG、AST 与 PDG，并提供代码修复、代码图问答及 AI 辅助图编辑功能。
 
-## 直接使用（推荐）
+## 下载并在本地运行（推荐）
 
-打开在线版本：
+本仓库已包含编译后的 Web 客户端，不需要安装 Flutter 或 Node.js。
 
-**https://bankzhy.github.io/hcg/**
+1. 在仓库主页点击 **Code → Download ZIP**。
+2. 解压 ZIP。
+3. 在解压后的目录运行启动脚本。
 
-在线版本无需安装 Flutter、Node.js、Python，也无需下载仓库。建议使用最新版 Chrome 或 Edge。
+macOS / Linux：
 
-> HCG 客户端本身可以直接运行，但 AI 功能仍需要一个可访问的 LLM 服务，例如本机 Ollama 或兼容 OpenAI API 的远程服务。
+```bash
+bash start.sh
+```
 
-## 安装到电脑
+Windows：
 
-HCG 支持安装为 Web App。安装后可以像普通桌面应用一样，从系统应用列表或桌面图标启动。
+```bat
+start.bat
+```
 
-### Chrome / Edge
+启动器会自动打开：
 
-1. 打开 [HCG 在线版本](https://bankzhy.github.io/hcg/)。
-2. 点击地址栏右侧的“安装”图标。
-3. 如果没有显示该图标，请打开浏览器菜单，选择“安装 HCG”或“应用 → 安装此网站为应用”。
-4. 安装完成后，从系统应用列表启动 HCG。
+```text
+http://127.0.0.1:4173/hcg/
+```
 
-这种方式不需要安装开发环境，应用更新后浏览器会自动获取新版本。
+若 4173 端口已被占用，会自动使用后续可用端口。按 `Ctrl+C` 停止 HCG。
 
-## 首次配置
+运行时只需要 Python 3，不需要 Flutter。可先用以下命令确认：
 
-启动后进入 **Settings** 页面，配置模型服务：
+```bash
+python3 --version
+```
 
-- **本地 Ollama**：通常使用 `http://localhost:11434/v1`。
-- **远程模型 API**：填写兼容 OpenAI API 的地址、模型名称和 API Key。
-- 配置保存在当前浏览器的本地存储中，不会提交到本仓库。
+Windows 可使用：
 
-使用远程 API 时，该服务必须允许浏览器跨域访问（CORS）。请勿在公共或不受信任的电脑上保存私人 API Key。
+```bat
+py -3 --version
+```
 
-## 下载仓库文件
+## 连接本地 Ollama
 
-如需下载已经编译好的 Web 文件：
+1. 安装并启动 [Ollama](https://ollama.com/download)。
+2. 下载需要的模型，例如：
 
-1. 打开本仓库主页。
-2. 点击 **Code → Download ZIP**。
-3. 解压下载的 ZIP 文件。
+```bash
+ollama pull qwen3:4b
+```
 
-本仓库保存的是已经编译好的 Web 发布文件，不是 Flutter 源代码。不要直接双击 `index.html`：浏览器的 `file://` 安全限制会导致应用无法正常加载。普通用户应使用上面的在线版本或安装 Web App。
+3. 在 HCG 的 **Settings** 页面填写：
 
-如果需要部署到自己的静态 Web 服务器，请通过 HTTP/HTTPS 提供这些文件，并保留 `/hcg/` 访问路径；当前构建的基础路径为 `/hcg/`。
+- Base URL：`http://127.0.0.1:11434/v1`
+- API Key：`ollama`
+- Model：`ollama list` 中显示的模型名称
 
-## 浏览器支持
+4. 点击 **Save** 和 **Test Connection**。
 
-- 推荐：最新版 Chrome、Edge
-- Firefox、Safari：基本页面可以使用，但安装 Web App 和本地模型访问能力可能受到浏览器限制
+HCG 与 Ollama 都通过 `127.0.0.1` 运行，因此一般不需要额外配置 `OLLAMA_ORIGINS`。
+
+## 使用评价数据
+
+在分析页面左侧的 **Files** 标签中点击 **Import Folder**，选择研究者分配的 `developerXX` 文件夹。代码只在当前浏览器和本机 Ollama 中处理。
+
+## 注意事项
+
+- 不要直接双击 `index.html`；浏览器的 `file://` 限制会导致 Flutter Web 无法正常加载。
+- 推荐最新版 Chrome 或 Edge。
+- 如果无法连接 Ollama，请确认 `http://127.0.0.1:11434/api/tags` 可以访问。
+- 本地配置保存在当前浏览器的本地存储中。
 
 ## English quick start
 
-Open **https://bankzhy.github.io/hcg/** in the latest Chrome or Edge. No Flutter, Node.js, or Python installation is required. To install it as a desktop-like app, use the install icon in the browser address bar. AI features require a reachable Ollama or OpenAI-compatible API service.
+Download the repository ZIP, extract it, and run `bash start.sh` on macOS/Linux or `start.bat` on Windows. Open `http://127.0.0.1:4173/hcg/` and configure Ollama with `http://127.0.0.1:11434/v1`. Flutter and Node.js are not required; Python 3 is required only for the local launcher.
