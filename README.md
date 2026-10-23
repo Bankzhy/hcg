@@ -1,64 +1,83 @@
 # HCG Web
 
-HCG（Hybrid Code Graph）是一个运行在浏览器中的代码图分析工具。它可以针对代码生成并展示 CFG、AST 和 PDG，并提供代码修复、代码图问答及 AI 辅助调整图等功能。
+HCG (Hybrid Code Graph) is a browser-based code analysis tool that combines lightweight static analysis with large language models. It generates and visualizes CFG, AST, and PDG graphs, and provides code repair, code-graph queries, highlighted code-to-graph mapping, manual graph editing, and AI-assisted graph modification.
 
-## 直接使用（推荐）
+## Demo
 
-打开在线版本：
+- [Watch the HCG demonstration video](https://youtu.be/Oi5JmsrKvLU)
+- [Open the online version](https://bankzhy.github.io/hcg/)
 
-**https://bankzhy.github.io/hcg/**
+## Interface Languages
 
-在线版本无需安装 Flutter、Node.js、Python，也无需下载仓库。建议使用最新版 Chrome 或 Edge。
+HCG provides its user interface in three languages:
 
-> HCG 客户端本身可以直接运行，但 AI 功能仍需要一个可访问的 LLM 服务，例如本机 Ollama 或兼容 OpenAI API 的远程服务。
+- English (default)
+- Simplified Chinese (简体中文)
+- Japanese (日本語)
 
-## 安装到电脑
+Users can switch the interface language at any time with the **Language** selector on the **Settings** page. The selected language is saved in the browser and restored the next time HCG is opened.
 
-HCG 支持安装为 Web App。安装后可以像普通桌面应用一样，从系统应用列表或桌面图标启动。
+## LLM Connection Options
 
-### Chrome / Edge
+HCG runs entirely in the browser, but its AI features require an accessible LLM service.
 
-1. 打开 [HCG 在线版本](https://bankzhy.github.io/hcg/)。
-2. 点击地址栏右侧的“安装”图标。
-3. 如果没有显示该图标，请打开浏览器菜单，选择“安装 HCG”或“应用 → 安装此网站为应用”。
-4. 安装完成后，从系统应用列表启动 HCG。
+### Using a local LLM with Ollama
 
-这种方式不需要安装开发环境，应用更新后浏览器会自动获取新版本。
+When you want to use a local LLM, install and run [Ollama](https://ollama.com/) on your computer. Downloading the HCG repository is not mandatory: you can first use the [online HCG application](https://bankzhy.github.io/hcg/) and connect it to Ollama.
 
-## 首次配置
+1. Install and start Ollama.
+2. Download a model, for example:
 
-启动后进入 **Settings** 页面，配置模型服务：
+   ```bash
+   ollama pull qwen3:4b
+   ```
 
-- **本地 Ollama**：通常使用 `http://localhost:11434/v1`。
-- **远程模型 API**：填写兼容 OpenAI API 的地址、模型名称和 API Key。
-- 配置保存在当前浏览器的本地存储中，不会提交到本仓库。
+3. Open the [online HCG application](https://bankzhy.github.io/hcg/).
+4. On the HCG **Settings** page, enter:
 
-使用远程 API 时，该服务必须允许浏览器跨域访问（CORS）。请勿在公共或不受信任的电脑上保存私人 API Key。
+   - API base URL: `http://localhost:11434/v1`
+   - Model: the Ollama model name you downloaded
+   - API key: leave empty unless your Ollama setup requires one
 
-## 下载仓库文件
+Browser security settings may prevent a public HTTPS page from connecting to a service on `localhost`. If the online version cannot reach Ollama, run HCG locally as an optional fallback:
 
-如需下载已经编译好的 Web 文件：
+   ```bash
+   git clone https://github.com/Bankzhy/hcg.git
+   python3 -m http.server 8080
+   ```
 
-1. 打开本仓库主页。
-2. 点击 **Code → Download ZIP**。
-3. 解压下载的 ZIP 文件。
+Then open [http://localhost:8080/hcg/](http://localhost:8080/hcg/) and use the same Ollama settings shown above. Run the server command from the directory that contains the cloned `hcg` folder.
 
-本仓库保存的是已经编译好的 Web 发布文件，不是 Flutter 源代码。不要直接双击 `index.html`：浏览器的 `file://` 安全限制会导致应用无法正常加载。普通用户应使用上面的在线版本或安装 Web App。
+The repository contains the compiled Web application, so Flutter, Node.js, and other development dependencies are not required. Do not open `index.html` directly with `file://`; HCG must be served over HTTP or HTTPS.
 
-如果需要部署到自己的静态 Web 服务器，请通过 HTTP/HTTPS 提供这些文件，并保留 `/hcg/` 访问路径；当前构建的基础路径为 `/hcg/`。
+### Remote use: enter an API directly
 
-## 浏览器支持
+When using a remote LLM service, local Ollama is not required. Open the [online HCG application](https://bankzhy.github.io/hcg/) and enter the following information on the **Settings** page:
 
-- 推荐：最新版 Chrome、Edge
-- Firefox、Safari：基本页面可以使用，但安装 Web App 和本地模型访问能力可能受到浏览器限制
+- An OpenAI-compatible API base URL
+- The model name
+- The API key, if required
 
-## 评价数据集
+The remote service must allow browser requests through CORS and should provide an HTTPS endpoint. Settings are stored only in the current browser's local storage. Do not save a private API key on a public or untrusted computer.
 
-用于开发者评价的代码文件位于 [`evaluation_dataset`](evaluation_dataset/)。
-该目录包含 `developer_01` 至 `developer_10` 十个文件夹，每位评价者使用分配给自己的文件夹，并在 HCG 的 **Files → Import Folder** 中一次性导入。
+## Install as a Web App
 
-每个文件夹包含 60 个样本：Java、Python、JavaScript 各 20 个。请勿查看或使用其他评价者的文件夹。
+In a recent version of Chrome or Edge:
 
-## English quick start
+1. Open the [HCG online version](https://bankzhy.github.io/hcg/).
+2. Select the install icon in the address bar.
+3. If the icon is not visible, open the browser menu and select **Install HCG** or **Apps → Install this site as an app**.
+4. Start HCG from the system application list after installation.
 
-Open **https://bankzhy.github.io/hcg/** in the latest Chrome or Edge. No Flutter, Node.js, or Python installation is required. To install it as a desktop-like app, use the install icon in the browser address bar. AI features require a reachable Ollama or OpenAI-compatible API service.
+This installs the interface as a desktop-like Web App. AI features still require either a reachable local Ollama service or a remote API.
+
+## Browser Support
+
+- Recommended: the latest Chrome or Edge
+- Firefox and Safari: the basic interface may work, but Web App installation and local-model access can be more restricted
+
+## Evaluation Dataset
+
+The code samples for the developer evaluation are located in [`evaluation_dataset`](evaluation_dataset/). The directory contains `developer_01` through `developer_10`, with one assigned folder for each evaluator.
+
+Each folder contains 60 samples: 20 Java, 20 Python, and 20 JavaScript files. Import the assigned folder in HCG through **Files → Import Folder**. Evaluators should use only their assigned folder.
