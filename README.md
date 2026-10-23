@@ -1,4 +1,4 @@
-# HCG Web
+# HCG
 
 HCG (Hybrid Code Graph) is a browser-based code analysis tool that combines lightweight static analysis with large language models. It generates and visualizes CFG, AST, and PDG graphs, and provides code repair, code-graph queries, highlighted code-to-graph mapping, manual graph editing, and AI-assisted graph modification.
 
