@@ -4,7 +4,7 @@ HCG (Hybrid Code Graph) is a browser-based code analysis tool that combines ligh
 
 ## Demo
 
-- [![YouTube: Watch the HCG demonstration video](https://img.shields.io/badge/YouTube-Watch_the_HCG_Demo-FF0000?logo=youtube&logoColor=white)](https://youtu.be/Oi5JmsrKvLU)
+- <img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" width="18"> [Watch the HCG demonstration video](https://youtu.be/Oi5JmsrKvLU)
 - [Open the online version](https://bankzhy.github.io/hcg/)
 
 ## Related Paper
